@@ -1,5 +1,12 @@
 import ForegroundColors from "./ForegroundColors";
 import BackgroundColors from "./BackgroundColors";
+import Borders from "./Borders";
+import Padding from "./Padding";
+import Margins from "./Margins";
+import Corners from "./Corners";
+import Dimensions from "./Dimensions";
+import Positions from "./Positions";
+import Zindex from "./Zindex"
 
 import "./index.css"; 
 export default function Lab2() { 
@@ -62,6 +69,34 @@ export default function Lab2() {
 
     <div>
       <BackgroundColors />
+    </div>
+
+    <div>
+      <Borders />
+    </div>
+
+    <div>
+      <Padding />
+    </div>
+
+    <div>
+      <Margins />
+    </div>
+
+    <div>
+      <Corners />
+    </div>
+
+    <div>
+      <Dimensions />
+    </div>
+
+    <div>
+      <Positions />
+    </div>
+
+    <div>
+      <Zindex /> 
     </div>
 
   </div>);} 
