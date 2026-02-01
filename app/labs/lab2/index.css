@@ -1,0 +1,56 @@
+/* custom default style for paragraph tags */ 
+/* p { 
+   background-color: green; 
+   color: white; 
+} */
+
+
+/* CSS ID selectors -- styles by referring to a specific tag by their ID */ 
+p#wd-id-selector-1 { 
+ background-color: red; 
+ color: white; 
+} 
+p#wd-id-selector-2 { 
+ background-color: yellow; 
+ color: black; 
+} 
+
+
+/* CSS Class Selector -- styles by referring to the className attribute 
+(can group tags even if different types of elements) */ 
+.wd-class-selector { 
+ background-color: yellow; 
+ color: blue; 
+}
+
+
+/* Selecting HTML Content Based on the Document Structure */
+.wd-selector-1 .wd-selector-3 { 
+   background-color: red; 
+   color: white; } 
+.wd-selector-2 > .wd-selector-3 > .wd-selector-4 { 
+   background-color: yellow; 
+   color: blue;  } 
+/* Selectors combined can refer to tags in particular places in the document. 
+A set of selectors separated by a space can refer to elements in a hierarchy */
+
+
+/* forground color */
+.wd-fg-color-black { color: black; } 
+.wd-fg-color-white { color: white; } 
+.wd-fg-color-blue { color: #7070ff; } 
+.wd-fg-color-red { color: #ff7070; } 
+.wd-fg-color-green { color: green; } 
+
+
+/* background color */
+.wd-bg-color-yellow { 
+background-color: #ffff07; } 
+.wd-bg-color-blue { 
+background-color: #7070ff; } 
+.wd-bg-color-red { 
+background-color: #ff7070; } 
+.wd-bg-color-green { 
+background-color: green; } 
+.wd-bg-color-gray { 
+background-color: lightgray; } 
