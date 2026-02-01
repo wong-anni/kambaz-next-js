@@ -22,7 +22,7 @@ export default function labs() {
          <Link href="/" id="wd-kambaz-link"> Kambaz</Link> 
        </li>  
        <li>
-        <Link href="https://github.com/wong-anni/-kambaz-next-js" id="wd-github">GitHub Repo</Link>
+        <Link href="https://github.com/wong-anni/kambaz-next-js" id="wd-github">GitHub Repo</Link>
         </li>     
      </ul> 
    </div> 
