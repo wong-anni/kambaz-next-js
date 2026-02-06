@@ -6,12 +6,28 @@ import Margins from "./Margins";
 import Corners from "./Corners";
 import Dimensions from "./Dimensions";
 import Positions from "./Positions";
-import Zindex from "./Zindex"
+import Zindex from "./Zindex";
+import Float from "./Float";
+import GridLayout from "./GridLayout";
+import Flex from "./Flex";
+import MediaQueriesDemo from "./MediaQueriesDemo";
+import ReactIconsSampler from "./ReactIconsSampler";
+
+import Container from "react-bootstrap/Container";
+import BootstrapGrids from "./BootstrapGrids";
+import ScreenSizeLabel from "./ScreenSizeLabel";
+import BootstrapTables from "./BootstrapTables";
+import BootstrapLists from "./BootstrapLists";
+import BootstrapForms from "./BootstrapForms";
+import BootstrapNavigation from "./BootstrapNavigation";
+
+import Link from "next/link"; 
 
 import "./index.css"; 
 export default function Lab2() { 
   return ( 
-    <div id="wd-lab2"> 
+    <Container>
+    {/* replacing root div with Container component from Boostrap CSS  ... <div id="wd-lab2">  */}
       <h2>Lab 2 - Cascading Style Sheets</h2> 
       <h3>Styling with the STYLE attribute</h3> 
       {/* <p style={{ backgroundColor: "blue", color: "white" }}>  */}
@@ -99,4 +115,53 @@ export default function Lab2() {
       <Zindex /> 
     </div>
 
-  </div>);} 
+    <div>
+      <Float /> 
+    </div>
+
+    <div>
+      <GridLayout /> 
+    </div>
+
+    <div>
+      <Flex />
+    </div>
+
+    <div>
+      <MediaQueriesDemo />
+    </div>
+
+    <div>
+      <ReactIconsSampler /> 
+    </div>
+
+    <Link href="/labs/lab2/tailwind"> 
+           2.3 Styling Webpages with the Tailwind CSS Library </Link>
+
+    <div>
+      <BootstrapGrids />
+    </div>
+
+    <div>
+      <ScreenSizeLabel />
+    </div>
+
+    <div>
+      <BootstrapTables />
+    </div>
+
+    <div>
+      <BootstrapLists />
+    </div>
+
+    <div>
+      <BootstrapForms />
+    </div>
+
+    <div>
+      <BootstrapNavigation />
+    </div>
+
+  {/* </div> */}
+  </Container>  
+);} 

@@ -1,4 +1,4 @@
-export default function Margins() {
+export default function Dimensions() {
   return (
 
     <div id="wd-css-dimensions">
