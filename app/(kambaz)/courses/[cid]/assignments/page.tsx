@@ -7,7 +7,6 @@ import { BsGripVertical } from "react-icons/bs";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { LuNotebookPen } from "react-icons/lu";
 import GradePercentage from "./GradePercentage";
-import { BsPlus } from "react-icons/bs";
 import { IoEllipsisVertical } from "react-icons/io5"; 
 import { FaPlus } from "react-icons/fa6";
 
@@ -38,7 +37,7 @@ export default function Assignments() {
                             <strong>A1</strong>
                         </Link> 
                         <span className="wd-assignment-subtitle">
-                            <span style={{color:"#ca1313"}}>Multiple Modules</span> | <strong>Not available until</strong> May 6 at 12:00am | 
+                            <span className="multiple-modules">Multiple Modules</span> | <strong>Not available until</strong> May 6 at 12:00am | 
                         </span>
                         <span className="wd-assignment-subtitle">
                             <strong>Due </strong>May 13 at 11:59pm | 100 pts
@@ -56,7 +55,7 @@ export default function Assignments() {
                         <strong>A2 </strong>  
                     </Link>
                     <span className="wd-assignment-subtitle">
-                        <span style={{color:"#ca1313"}}>Multiple Modules</span> | <strong>Not available until</strong> May 13 at 12:00am | 
+                        <span className="multiple-modules">Multiple Modules</span> | <strong>Not available until</strong> May 13 at 12:00am | 
                     </span>
                     <span className="wd-assignment-subtitle">
                         <strong>Due </strong>May 20 at 11:59pm | 100 pts 
@@ -74,7 +73,7 @@ export default function Assignments() {
                         <strong>A3 </strong>  
                     </Link>
                     <span className="wd-assignment-subtitle">
-                        <span style={{color:"#ca1313"}}>Multiple Modules</span> | <strong>Not available until</strong> May 20 at 12:00am | 
+                        <span className="multiple-modules">Multiple Modules</span> | <strong>Not available until</strong> May 20 at 12:00am | 
                     </span>
                     <span className="wd-assignment-subtitle">
                         <strong>Due </strong>May 27 at 11:59pm | 100 pts 
