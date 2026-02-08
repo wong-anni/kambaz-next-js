@@ -33,3 +33,24 @@ body * {
 .wd-lesson { 
   border-left: 3px solid green !important; 
 }
+
+
+
+.wd-assignment-list-item {
+    border-left: 3px solid green !important; 
+}
+.wd-assignment-link {
+    /* make black, unhighlighted text */
+    color:rgba(0, 0, 0, 0.841);
+    text-decoration: none;
+}
+.wd-assignment-subtitle {
+    font-size: medium;
+    color:darkslategray;
+}
+
+.wd-assignment-grade-percentage {
+    border: 1px solid darkslategray;
+    padding: 4px 8px;
+    border-radius: 25px;
+}
