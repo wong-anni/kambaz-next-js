@@ -1,201 +1,224 @@
+"use client";
+import { Form, FormLabel, FormControl, FormGroup, FormSelect, FormCheck } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
+import { ListGroup, InputGroup } from "react-bootstrap";
+import { LiaCalendar } from "react-icons/lia";
+import { Button } from "react-bootstrap";
+
 export default function AssignmentEditor() {
     return (
         <div id="wd-assignments-editor">
-            <label htmlFor="wd-name"><strong>Assignment Name</strong></label> 
-            <br></br><br></br>
-            <input id="wd-name" defaultValue="A1 - ENV + HTML" /><br /><br />
-            <textarea id="wd-description" cols={45} rows={10}
-                defaultValue="The assignment is available online Submit a 
-                link to the landing page of your Web 
-                application running on Netlify. The landing 
-                page should include the following: Your full 
-                name and section Links to each of the lab 
-                assignments Link to the Kambas application 
-                Links to all relevant source code repositories 
-                The Kambas application should include a link 
-                to navigate back to the landing page." />
-            <br /> <br /> 
-            <table>
-            <tbody>
-                {/* tr -- declares the start of a row */}
-                <tr> 
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-points">Points</label>
-                    </td>
-                    <td>
-                        <input id="wd-points" defaultValue={100} />
-                    </td>
-                </tr>
+            <Form>
+                <FormGroup>
+                    <FormLabel htmlFor="wd-name"><strong>Assignment Name</strong></FormLabel> 
+                    <FormControl id="wd-name" defaultValue="A1" className="mb-4" />
+                </FormGroup>
 
-                {/* Complete on your own */}
-                <br></br> 
-                <tr> 
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-group">Assignment Group</label>
-                    </td>
-                    <td>
-                        <select id="wd-group">
-                            <option selected value="ASSIGNMENTS">ASSIGNMENTS</option>
+                <FormGroup>
+                    <FormControl as="textarea" id="wd-description"  rows={13} className="mb-4"
+                        defaultValue={
+`
+The assignment is available online
+
+Submit a link to the landing page of your Web application running on Netlify.
+
+The landing page should include the following: 
+
+• Your full name and section
+• Links to each of the lab assignments  
+• Link to the Kambas application
+• Links to all relevant source code repositories
+
+The Kambas application should include a link to navigate back to the landing page.` } />
+                </FormGroup>
+
+                <FormGroup className="mb-4">
+                <Row> 
+                    <Col align="right" valign="top">
+                        <FormLabel htmlFor="wd-points">Points</FormLabel>
+                    </Col>
+                    <Col>
+                        <FormControl id="wd-points" defaultValue={100} />
+                    </Col>
+                </Row>
+                </FormGroup>
+
+                <FormGroup className="mb-4">
+                <Row> 
+                    <Col align="right" valign="top">
+                        <FormLabel htmlFor="wd-group">Assignment Group</FormLabel>
+                    </Col>
+                    <Col>
+                        <FormSelect id="wd-group" defaultValue="ASSIGNMENTS">
+                            <option value="ASSIGNMENTS">ASSIGNMENTS</option>
                             <option value="A1">A1</option>
                             <option value="A2">A2</option>
                             <option value="A3">A3</option>
-                        </select>
-                    </td>
-                </tr>
+                        </FormSelect>
+                    </Col>
+                </Row>
+                </FormGroup>
 
-                <br></br> 
-                <tr> 
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-display-grade-as">Display Grade as</label>
-                    </td>
-                    <td>
-                        <select id="wd-display-grade-as">
+                <FormGroup className="mb-4">
+                <Row> 
+                    <Col align="right" valign="top">
+                        <FormLabel htmlFor="wd-display-grade-as">Display Grade as</FormLabel>
+                    </Col>
+                    <Col>
+                        <FormSelect id="wd-display-grade-as">
                             <option selected value="Percentage">Percentage</option>
                             <option value="Fraction">Fraction</option>
                             <option value="Letter">Letter</option>
                             <option value="Integer">Integer</option>
-                        </select>
-                    </td>
-                </tr>
+                        </FormSelect>
+                    </Col>
+                </Row>
+                </FormGroup>
 
-
-                <br></br> 
-                <tr> 
-                    <td align="right" valign="top">
-                        <label htmlFor="wd-submission-type">Submission Type</label>
-                    </td>
-                    <td>
-                        <select id="wd-submission-type">
+                
+                <FormGroup className="mb-4">
+                <Row> 
+                    <Col align="right" valign="top">
+                        <FormLabel htmlFor="wd-submission-type">Submission Type</FormLabel>
+                    </Col>
+                    <Col>
+                    <ListGroup className="p-3 rounded-2 assignment-editor-subbox">
+                        <FormSelect id="wd-submission-type" className="mb-3">
                             <option selected value="Online">Online</option>
                             <option value="Paper">Paper</option>
-                        </select>
-                    </td>
-                </tr>
+                        </FormSelect>
+                    <Row>
+                        <Col align="left" valign="top">
+                            <FormLabel className="assignment-editor-spacing">
+                                <strong>Online Entry Options</strong>
+                            </FormLabel>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col align="left" valign="top">
+                            <span  style={{ display: "inline-flex", gap: "0.5rem"}}>
+                            <FormCheck type="checkbox" id="wd-text-entry" />
+                            <FormLabel className="assignment-editor-spacing" 
+                                        htmlFor="wd-text-entry">Text Entry</FormLabel>
+                            </span>
+                        </Col>
+                    </Row>
+                    <Row> 
+                        <Col align="left" valign="top">
+                            <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
+                            <FormCheck type="checkbox" id="wd-website-url" />
+                            <FormLabel className="assignment-editor-spacing" 
+                                        htmlFor="wd-website-url">Website URL </FormLabel>
+                            </span>
+                        </Col> 
+                    </Row>
+                    <Row>
+                        <Col align="left" valign="top">
+                            <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
+                            <FormCheck type="checkbox" id="wd-media-recordings" />
+                            <FormLabel className="assignment-editor-spacing" 
+                                        htmlFor="wd-media-recordings">Media Recordings</FormLabel>
+                            </span>
+                        </Col> 
+                    </Row> 
+                    <Row> 
+                        <Col align="left" valign="top"> 
+                            <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
+                            <FormCheck type="checkbox" id="wd-student-annotation" />
+                            <FormLabel className="assignment-editor-spacing" 
+                                        htmlFor="wd-student-annotation">Student Annotation</FormLabel>
+                            </span>
+                        </Col> 
+                    </Row> 
+                    <Row> 
+                        <Col align="left" valign="top"> 
+                            <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
+                            <FormCheck type="checkbox" id="wd-file-upload" />
+                            <FormLabel className="assignment-editor-spacing" 
+                                        htmlFor="wd-file-upload">File Uploads</FormLabel>
+                            </span>
+                        </Col>
+                    </Row>
+                </ListGroup>
 
+                    </Col>
+                </Row>
+                </FormGroup>
+                
 
+                <FormGroup className="mb-3">
+                <Row>
+                    <Col align="right" valign="top">
+                        <FormLabel>Assign</FormLabel>
+                    </Col>    
+                    <Col align="left" valign="top">
+                        <ListGroup className="p-3 rounded-2 assignment-editor-subbox" >
+                        <FormLabel htmlFor="wd-assign-to"><strong>Assign To</strong></FormLabel>
 
+                <Row>
+                    <Col align="left" valign="top">
+                        <FormSelect id="wd-assign-to" defaultValue="Everyone" className="assignment-editor-spacing"> 
+                            <option value="assign-to">Everyone</option> 
+                        </FormSelect>
+                    </Col>    
+                </Row>                
 
+                <Row>
+                    <Col align="left" valign="top">
+                        <FormLabel htmlFor="wd-due-date"><strong>Due</strong></FormLabel>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                    <InputGroup className="assignment-editor-spacing">
+                        <FormControl id="wd-due-date"
+                               defaultValue="May 13, 2024, 11:59 PM " /> 
+                        <InputGroup.Text>  <LiaCalendar /> </InputGroup.Text>
+                    </InputGroup>
+                    </Col>
+                </Row>
 
+                <Row>
+                    <Col align="left" valign="top">
+                        <FormLabel htmlFor="wd-available-from"><strong>Available From</strong></FormLabel>
+                    </Col>
+                    <Col align="left" valign="top">
+                        <FormLabel htmlFor="wd-available-until"><strong>Until</strong></FormLabel>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col align="left" valign="top">
+                        <InputGroup className="assignment-editor-spacing">
+                            <FormControl id="wd-available-from" 
+                               defaultValue="May 6, 2024, 12:00 AM" />
+                            <InputGroup.Text> <LiaCalendar /> </InputGroup.Text>
+                        </InputGroup>
+                    </Col>
+                    <Col align="left" valign="top">
+                        <InputGroup className="assignment-editor-spacing">
+                            <FormControl id="wd-available-until"/>
+                            <InputGroup.Text> <LiaCalendar /> </InputGroup.Text>
+                        </InputGroup>
+                    </Col>
+                </Row>
+                </ListGroup>
+                </Col>
+                </Row>
+                </FormGroup>
 
-                <br></br> 
-                <tr>
-                    <td></td> 
-                    <td align="left" valign="top">
-                        <label>Online Entry Options</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td align="left" valign="top">
-                        <input type="checkbox" id="wd-text-entry" />
-                        <label htmlFor="wd-text-entry">Text Entry</label>
-                    </td>
-                </tr>
-                <tr> 
-                    <td></td>
-                    <td align="left" valign="top">
-                        <input type="checkbox" id="wd-website-url" />
-                        <label htmlFor="wd-website-url">Website URL </label>
-                    </td> 
-                </tr>
-                <tr>
-                    <td></td>
-                    <td align="left" valign="top">
-                        <input type="checkbox" id="wd-media-recordings" />
-                        <label htmlFor="wd-media-recordings">Media Recordings</label>
-                    </td> 
-                </tr> 
-                <tr> 
-                    <td></td>
-                    <td align="left" valign="top"> 
-                        <input type="checkbox" id="wd-student-annotation" />
-                        <label htmlFor="wd-student-annotation">Student Annotation</label>
-                    </td> 
-                </tr> 
-                <tr> 
-                    <td></td>
-                    <td align="left" valign="top"> 
-                        <input type="checkbox" id="wd-file-upload" />
-                        <label htmlFor="wd-file-upload">File Uploads</label>
-                    </td>
-                </tr>
-
-
-
-                <br />
-                <tr>
-                    <td align="right" valign="top">
-                        <label>Assign</label>
-                    </td>    
-                    <td align="left" valign="top">
-                        <label htmlFor="wd-assign-to">Assign To</label>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td></td>
-                    <td align="left" valign="top">
-                        <input id="wd-assign-to" type="text" defaultValue="Everyone" />
-                    </td>    
-                </tr>                
-                  
-
-
-                <br />
-                <tr>
-                    <td></td>
-                    <td align="left" valign="top">
-                        <label htmlFor="wd-due-date">Due</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <input id="wd-due-date"
-                               type="date" 
-                               defaultValue="2024-05-13" />
-                    </td>
-                </tr>
-
-
-                <br /> 
-                <tr>
-                    <td></td>
-                    <td align="left" valign="top">
-                        <label htmlFor="wd-available-from">Available From</label>
-                    </td>
-                    <td align="left" valign="top">
-                        <label htmlFor="wd-available-until">Until</label>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td align="left" valign="top">
-                        <input id="wd-available-from" 
-                               type="date"
-                               defaultValue="2024-05-06" />
-                    </td>
-                    <td align="left" valign="top">
-                        <input id="wd-available-until"
-                               type="date"
-                               defaultValue="2024-05-20" />
-                    </td>
-                </tr>
-
-
-                </tbody>
-
-            </table>
-            <hr />
-            <table width="100%">
-                <tfoot>
-                    <tr>
-                        <td align="right">
-                            <button>Cancel</button> <button>Save</button>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
+                
             
+            <hr />
+            <Row>
+                <Col align="right">
+                    <Button variant="danger" size="lg" className="me-1 float-end">
+                        Save
+                    </Button> 
+                    <Button variant="secondary" size="lg" className="me-1 float-end">
+                        Cancel
+                    </Button>                            
+                </Col>
+            </Row>
+            </Form>
         </div>
 );}
