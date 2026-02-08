@@ -1,13 +1,9 @@
 "use client";
-import Form from "react-bootstrap/Form";
-import FormLabel from "react-bootstrap/FormLabel";
-import FormControl from "react-bootstrap/FormControl";
-import FormGroup from "react-bootstrap/FormGroup";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { FormSelect, FormCheck } from "react-bootstrap";
-import ListGroup from "react-bootstrap/ListGroup";
-import ListGroupItem from "react-bootstrap/ListGroupItem";
+import { Form, FormLabel, FormControl, FormGroup, FormSelect, FormCheck } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
+import { ListGroup, InputGroup } from "react-bootstrap";
+import { LiaCalendar } from "react-icons/lia";
+import { Button } from "react-bootstrap";
 
 export default function AssignmentEditor() {
     return (
@@ -17,6 +13,7 @@ export default function AssignmentEditor() {
                     <FormLabel htmlFor="wd-name"><strong>Assignment Name</strong></FormLabel> 
                     <FormControl id="wd-name" defaultValue="A1" className="mb-4" />
                 </FormGroup>
+
                 <FormGroup>
                     <FormControl as="textarea" id="wd-description"  rows={13} className="mb-4"
                         defaultValue={
@@ -34,11 +31,8 @@ The landing page should include the following:
 
 The Kambas application should include a link to navigate back to the landing page.` } />
                 </FormGroup>
-            </Form>
 
-            <Form>
-                <FormGroup>
-                {/* tr -- declares the start of a row */}
+                <FormGroup className="mb-4">
                 <Row> 
                     <Col align="right" valign="top">
                         <FormLabel htmlFor="wd-points">Points</FormLabel>
@@ -47,23 +41,25 @@ The Kambas application should include a link to navigate back to the landing pag
                         <FormControl id="wd-points" defaultValue={100} />
                     </Col>
                 </Row>
+                </FormGroup>
 
-                <br></br> 
+                <FormGroup className="mb-4">
                 <Row> 
                     <Col align="right" valign="top">
                         <FormLabel htmlFor="wd-group">Assignment Group</FormLabel>
                     </Col>
                     <Col>
-                        <FormSelect id="wd-group">
-                            <option selected value="ASSIGNMENTS">ASSIGNMENTS</option>
+                        <FormSelect id="wd-group" defaultValue="ASSIGNMENTS">
+                            <option value="ASSIGNMENTS">ASSIGNMENTS</option>
                             <option value="A1">A1</option>
                             <option value="A2">A2</option>
                             <option value="A3">A3</option>
                         </FormSelect>
                     </Col>
                 </Row>
+                </FormGroup>
 
-                <br></br> 
+                <FormGroup className="mb-4">
                 <Row> 
                     <Col align="right" valign="top">
                         <FormLabel htmlFor="wd-display-grade-as">Display Grade as</FormLabel>
@@ -77,148 +73,152 @@ The Kambas application should include a link to navigate back to the landing pag
                         </FormSelect>
                     </Col>
                 </Row>
+                </FormGroup>
 
-
-                <br></br> 
+                
+                <FormGroup className="mb-4">
                 <Row> 
                     <Col align="right" valign="top">
                         <FormLabel htmlFor="wd-submission-type">Submission Type</FormLabel>
                     </Col>
                     <Col>
-                    <ListGroup className="rounded-0">
-                    <ListGroupItem className="p-3 m-3 mb-5 border-gray">
-
-                        <FormSelect id="wd-submission-type">
+                    <ListGroup className="p-3 rounded-2 assignment-editor-subbox">
+                        <FormSelect id="wd-submission-type" className="mb-3">
                             <option selected value="Online">Online</option>
                             <option value="Paper">Paper</option>
                         </FormSelect>
-                <br></br> 
-                <Row>
-                    <Col align="left" valign="top">
-                        <FormLabel><strong>Online Entry Options</strong></FormLabel>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col align="left" valign="top">
-                        <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
-                        <FormCheck type="checkbox" id="wd-text-entry" />
-                        <FormLabel htmlFor="wd-text-entry">Text Entry</FormLabel>
-                        </span>
-                    </Col>
-                </Row>
-                <Row> 
-                    <Col align="left" valign="top">
-                        <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
-                        <FormCheck type="checkbox" id="wd-website-url" />
-                        <FormLabel htmlFor="wd-website-url">Website URL </FormLabel>
-                        </span>
-                    </Col> 
-                </Row>
-                <Row>
-                    <Col align="left" valign="top">
-                        <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
-                        <FormCheck type="checkbox" id="wd-media-recordings" />
-                        <FormLabel htmlFor="wd-media-recordings">Media Recordings</FormLabel>
-                        </span>
-                    </Col> 
-                </Row> 
-                <Row> 
-                    <Col align="left" valign="top"> 
-                        <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
-                        <FormCheck type="checkbox" id="wd-student-annotation" />
-                        <FormLabel htmlFor="wd-student-annotation">Student Annotation</FormLabel>
-                        </span>
-                    </Col> 
-                </Row> 
-                <Row> 
-                    <Col align="left" valign="top"> 
-                        <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
-                        <FormCheck type="checkbox" id="wd-file-upload" />
-                        <FormLabel htmlFor="wd-file-upload">File Uploads</FormLabel>
-                        </span>
-                    </Col>
-                </Row>
-                </ListGroupItem>
+                    <Row>
+                        <Col align="left" valign="top">
+                            <FormLabel className="assignment-editor-spacing">
+                                <strong>Online Entry Options</strong>
+                            </FormLabel>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col align="left" valign="top">
+                            <span  style={{ display: "inline-flex", gap: "0.5rem"}}>
+                            <FormCheck type="checkbox" id="wd-text-entry" />
+                            <FormLabel className="assignment-editor-spacing" 
+                                        htmlFor="wd-text-entry">Text Entry</FormLabel>
+                            </span>
+                        </Col>
+                    </Row>
+                    <Row> 
+                        <Col align="left" valign="top">
+                            <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
+                            <FormCheck type="checkbox" id="wd-website-url" />
+                            <FormLabel className="assignment-editor-spacing" 
+                                        htmlFor="wd-website-url">Website URL </FormLabel>
+                            </span>
+                        </Col> 
+                    </Row>
+                    <Row>
+                        <Col align="left" valign="top">
+                            <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
+                            <FormCheck type="checkbox" id="wd-media-recordings" />
+                            <FormLabel className="assignment-editor-spacing" 
+                                        htmlFor="wd-media-recordings">Media Recordings</FormLabel>
+                            </span>
+                        </Col> 
+                    </Row> 
+                    <Row> 
+                        <Col align="left" valign="top"> 
+                            <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
+                            <FormCheck type="checkbox" id="wd-student-annotation" />
+                            <FormLabel className="assignment-editor-spacing" 
+                                        htmlFor="wd-student-annotation">Student Annotation</FormLabel>
+                            </span>
+                        </Col> 
+                    </Row> 
+                    <Row> 
+                        <Col align="left" valign="top"> 
+                            <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
+                            <FormCheck type="checkbox" id="wd-file-upload" />
+                            <FormLabel className="assignment-editor-spacing" 
+                                        htmlFor="wd-file-upload">File Uploads</FormLabel>
+                            </span>
+                        </Col>
+                    </Row>
                 </ListGroup>
 
                     </Col>
                 </Row>
-
+                </FormGroup>
                 
 
-                <br />
+                <FormGroup className="mb-3">
                 <Row>
                     <Col align="right" valign="top">
                         <FormLabel>Assign</FormLabel>
                     </Col>    
                     <Col align="left" valign="top">
-                        <FormLabel htmlFor="wd-assign-to">Assign To</FormLabel>
-                    </Col>
-                </Row>
+                        <ListGroup className="p-3 rounded-2 assignment-editor-subbox" >
+                        <FormLabel htmlFor="wd-assign-to"><strong>Assign To</strong></FormLabel>
 
                 <Row>
-                    <Col></Col>
                     <Col align="left" valign="top">
-                        <FormControl id="wd-assign-to" type="text" defaultValue="Everyone" />
+                        <FormSelect id="wd-assign-to" defaultValue="Everyone" className="assignment-editor-spacing"> 
+                            <option value="assign-to">Everyone</option> 
+                        </FormSelect>
                     </Col>    
                 </Row>                
-                  
 
-
-                <br />
                 <Row>
-                    <Col></Col>
                     <Col align="left" valign="top">
-                        <FormLabel htmlFor="wd-due-date">Due</FormLabel>
+                        <FormLabel htmlFor="wd-due-date"><strong>Due</strong></FormLabel>
                     </Col>
                 </Row>
                 <Row>
-                    <Col></Col>
                     <Col>
+                    <InputGroup className="assignment-editor-spacing">
                         <FormControl id="wd-due-date"
-                               type="date" 
-                               defaultValue="2024-05-13" />
+                               defaultValue="May 13, 2024, 11:59 PM " /> 
+                        <InputGroup.Text>  <LiaCalendar /> </InputGroup.Text>
+                    </InputGroup>
                     </Col>
                 </Row>
 
-
-                <br /> 
                 <Row>
-                    <Col></Col>
                     <Col align="left" valign="top">
-                        <FormLabel htmlFor="wd-available-from">Available From</FormLabel>
+                        <FormLabel htmlFor="wd-available-from"><strong>Available From</strong></FormLabel>
                     </Col>
                     <Col align="left" valign="top">
-                        <FormLabel htmlFor="wd-available-until">Until</FormLabel>
+                        <FormLabel htmlFor="wd-available-until"><strong>Until</strong></FormLabel>
                     </Col>
                 </Row>
                 <Row>
-                    <Col></Col>
                     <Col align="left" valign="top">
-                        <FormControl id="wd-available-from" 
-                               type="date"
-                               defaultValue="2024-05-06" />
+                        <InputGroup className="assignment-editor-spacing">
+                            <FormControl id="wd-available-from" 
+                               defaultValue="May 6, 2024, 12:00 AM" />
+                            <InputGroup.Text> <LiaCalendar /> </InputGroup.Text>
+                        </InputGroup>
                     </Col>
                     <Col align="left" valign="top">
-                        <FormControl id="wd-available-until"
-                               type="date"
-                               defaultValue="2024-05-20" />
+                        <InputGroup className="assignment-editor-spacing">
+                            <FormControl id="wd-available-until"/>
+                            <InputGroup.Text> <LiaCalendar /> </InputGroup.Text>
+                        </InputGroup>
                     </Col>
                 </Row>
-
-
+                </ListGroup>
+                </Col>
+                </Row>
                 </FormGroup>
-            </Form>
-            <hr />
-            <table width="100%">
-                <tfoot>
-                    <tr>
-                        <td align="right">
-                            <button>Cancel</button> <button>Save</button>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
+
+                
             
+            <hr />
+            <Row>
+                <Col align="right">
+                    <Button variant="danger" size="lg" className="me-1 float-end">
+                        Save
+                    </Button> 
+                    <Button variant="secondary" size="lg" className="me-1 float-end">
+                        Cancel
+                    </Button>                            
+                </Col>
+            </Row>
+            </Form>
         </div>
 );}

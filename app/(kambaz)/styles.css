@@ -58,3 +58,11 @@ body * {
 .multiple-modules {
     color:#ca1313;
 }
+
+.assignment-editor-subbox {
+    border: 1px solid rgba(47, 79, 79, 0.29);
+}
+
+.assignment-editor-spacing {
+    margin-bottom: 20px;
+}
