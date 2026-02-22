@@ -27,11 +27,17 @@ import Classes from "./Classes";
 import Styles from "./Styles";
 import ClientComponentDemo from "./ClientComponentDemo";
 import ServerComponentDemo from "./ServerComponentDemo";
+import Add from "./Add";
+import Square from "./Square";
+import Highlight from "./Highlight";
+import PathParameters from "./PathParameters";
+import TodoItem from "./todo/TodoItem";
+import TodoList from "./todo/TodoList";
 
 export default function Lab3() { 
   return ( 
   
-    <div id="wd-lab3"> 
+    <div id="wd-lab3" className="container"> 
       <h2>Lab 3</h2> 
         {/* intro to javascript */}
         <VariablesAndConstants/>
@@ -71,6 +77,27 @@ export default function Lab3() {
         {/* Client and Server Components */}
         <ClientComponentDemo />
         <ServerComponentDemo />
+
+        {/* parameterizing components */}
+        <Add a={3} b={4} /> 
+
+        <h4>Square of 4</h4>
+        <Square>4</Square>
+        <hr />
+
+        <Highlight>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipitratione eaque illo minus cum, saepe
+        totam
+        vel nihil repellat nemo explicabo excepturi consectetur. Modi omnis minus sequi maiores, provident
+        voluptates.
+        </Highlight>
+
+        <PathParameters /> 
+
+        {/* rendering a data structure */}
+        <TodoItem /> 
+        <TodoList /> 
+        
     </div>
 
 );} 
