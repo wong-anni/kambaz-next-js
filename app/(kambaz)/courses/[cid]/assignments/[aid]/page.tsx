@@ -4,32 +4,25 @@ import { Row, Col } from "react-bootstrap";
 import { ListGroup, InputGroup } from "react-bootstrap";
 import { LiaCalendar } from "react-icons/lia";
 import { Button } from "react-bootstrap";
+import { useParams } from "next/navigation";
+import Link from "next/link";
+import * as db from "../../../../database";
 
 export default function AssignmentEditor() {
+    const { cid, aid } = useParams();
+    const assignments = db.assignments.filter((assignment: any) => assignment.course === cid);
+    const assignment = assignments.find((assignment: any) => assignment._id === aid);
     return (
         <div id="wd-assignments-editor">
             <Form>
                 <FormGroup>
                     <FormLabel htmlFor="wd-name"><strong>Assignment Name</strong></FormLabel> 
-                    <FormControl id="wd-name" defaultValue="A1" className="mb-4" />
+                    <FormControl id="wd-name" defaultValue={assignment?.title} className="mb-4" />
                 </FormGroup>
 
                 <FormGroup>
                     <FormControl as="textarea" id="wd-description"  rows={13} className="mb-4"
-                        defaultValue={
-`
-The assignment is available online
-
-Submit a link to the landing page of your Web application running on Netlify.
-
-The landing page should include the following: 
-
-• Your full name and section
-• Links to each of the lab assignments  
-• Link to the Kambas application
-• Links to all relevant source code repositories
-
-The Kambas application should include a link to navigate back to the landing page.` } />
+                        defaultValue={assignment?.description} />
                 </FormGroup>
 
                 <FormGroup className="mb-4">
@@ -38,7 +31,7 @@ The Kambas application should include a link to navigate back to the landing pag
                         <FormLabel htmlFor="wd-points">Points</FormLabel>
                     </Col>
                     <Col>
-                        <FormControl id="wd-points" defaultValue={100} />
+                        <FormControl id="wd-points" defaultValue={assignment?.points} />
                     </Col>
                 </Row>
                 </FormGroup>
@@ -49,7 +42,7 @@ The Kambas application should include a link to navigate back to the landing pag
                         <FormLabel htmlFor="wd-group">Assignment Group</FormLabel>
                     </Col>
                     <Col>
-                        <FormSelect id="wd-group" defaultValue="ASSIGNMENTS">
+                        <FormSelect id="wd-group" defaultValue={assignment?.assignmentGroup}>
                             <option value="ASSIGNMENTS">ASSIGNMENTS</option>
                             <option value="A1">A1</option>
                             <option value="A2">A2</option>
@@ -65,8 +58,8 @@ The Kambas application should include a link to navigate back to the landing pag
                         <FormLabel htmlFor="wd-display-grade-as">Display Grade as</FormLabel>
                     </Col>
                     <Col>
-                        <FormSelect id="wd-display-grade-as">
-                            <option selected value="Percentage">Percentage</option>
+                        <FormSelect id="wd-display-grade-as" defaultValue={assignment?.display}>
+                            <option value="PERCENTAGE">Percentage</option>
                             <option value="Fraction">Fraction</option>
                             <option value="Letter">Letter</option>
                             <option value="Integer">Integer</option>
@@ -83,8 +76,8 @@ The Kambas application should include a link to navigate back to the landing pag
                     </Col>
                     <Col>
                     <ListGroup className="p-3 rounded-2 assignment-editor-subbox">
-                        <FormSelect id="wd-submission-type" className="mb-3">
-                            <option selected value="Online">Online</option>
+                        <FormSelect id="wd-submission-type" className="mb-3" defaultValue={assignment?.type}>
+                            <option value="Online">Online</option>
                             <option value="Paper">Paper</option>
                         </FormSelect>
                     <Row>
@@ -97,7 +90,7 @@ The Kambas application should include a link to navigate back to the landing pag
                     <Row>
                         <Col align="left" valign="top">
                             <span  style={{ display: "inline-flex", gap: "0.5rem"}}>
-                            <FormCheck type="checkbox" id="wd-text-entry" />
+                            <FormCheck type="checkbox" id="wd-text-entry" defaultChecked={assignment?.options === "Text Entry"} />
                             <FormLabel className="assignment-editor-spacing" 
                                         htmlFor="wd-text-entry">Text Entry</FormLabel>
                             </span>
@@ -106,7 +99,7 @@ The Kambas application should include a link to navigate back to the landing pag
                     <Row> 
                         <Col align="left" valign="top">
                             <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
-                            <FormCheck type="checkbox" id="wd-website-url" />
+                            <FormCheck type="checkbox" id="wd-website-url" defaultChecked={assignment?.options === "Website URL"} />
                             <FormLabel className="assignment-editor-spacing" 
                                         htmlFor="wd-website-url">Website URL </FormLabel>
                             </span>
@@ -115,7 +108,7 @@ The Kambas application should include a link to navigate back to the landing pag
                     <Row>
                         <Col align="left" valign="top">
                             <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
-                            <FormCheck type="checkbox" id="wd-media-recordings" />
+                            <FormCheck type="checkbox" id="wd-media-recordings" defaultChecked={assignment?.options === "Media Recordings"} />
                             <FormLabel className="assignment-editor-spacing" 
                                         htmlFor="wd-media-recordings">Media Recordings</FormLabel>
                             </span>
@@ -124,7 +117,7 @@ The Kambas application should include a link to navigate back to the landing pag
                     <Row> 
                         <Col align="left" valign="top"> 
                             <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
-                            <FormCheck type="checkbox" id="wd-student-annotation" />
+                            <FormCheck type="checkbox" id="wd-student-annotation" defaultChecked={assignment?.options === "Student Annotation"} />
                             <FormLabel className="assignment-editor-spacing" 
                                         htmlFor="wd-student-annotation">Student Annotation</FormLabel>
                             </span>
@@ -133,7 +126,7 @@ The Kambas application should include a link to navigate back to the landing pag
                     <Row> 
                         <Col align="left" valign="top"> 
                             <span  style={{ display: "inline-flex", gap: "0.5rem" }}>
-                            <FormCheck type="checkbox" id="wd-file-upload" />
+                            <FormCheck type="checkbox" id="wd-file-upload" defaultChecked={assignment?.options === "File Uploads"} />
                             <FormLabel className="assignment-editor-spacing" 
                                         htmlFor="wd-file-upload">File Uploads</FormLabel>
                             </span>
@@ -157,7 +150,7 @@ The Kambas application should include a link to navigate back to the landing pag
 
                 <Row>
                     <Col align="left" valign="top">
-                        <FormSelect id="wd-assign-to" defaultValue="Everyone" className="assignment-editor-spacing"> 
+                        <FormSelect id="wd-assign-to" defaultValue={assignment?.assign} className="assignment-editor-spacing"> 
                             <option value="assign-to">Everyone</option> 
                         </FormSelect>
                     </Col>    
@@ -172,7 +165,7 @@ The Kambas application should include a link to navigate back to the landing pag
                     <Col>
                     <InputGroup className="assignment-editor-spacing">
                         <FormControl id="wd-due-date"
-                               defaultValue="May 13, 2024, 11:59 PM " /> 
+                               defaultValue={assignment?.due} /> 
                         <InputGroup.Text>  <LiaCalendar /> </InputGroup.Text>
                     </InputGroup>
                     </Col>
@@ -190,13 +183,14 @@ The Kambas application should include a link to navigate back to the landing pag
                     <Col align="left" valign="top">
                         <InputGroup className="assignment-editor-spacing">
                             <FormControl id="wd-available-from" 
-                               defaultValue="May 6, 2024, 12:00 AM" />
+                               defaultValue={assignment?.available} />
                             <InputGroup.Text> <LiaCalendar /> </InputGroup.Text>
                         </InputGroup>
                     </Col>
                     <Col align="left" valign="top">
                         <InputGroup className="assignment-editor-spacing">
-                            <FormControl id="wd-available-until"/>
+                            <FormControl id="wd-available-until"
+                            defaultValue={assignment?.until}/>
                             <InputGroup.Text> <LiaCalendar /> </InputGroup.Text>
                         </InputGroup>
                     </Col>
@@ -211,12 +205,16 @@ The Kambas application should include a link to navigate back to the landing pag
             <hr />
             <Row>
                 <Col align="right">
-                    <Button variant="danger" size="lg" className="me-1 float-end">
+                    <Link href={`/courses/${cid}/assignments/`} className="text-decoration-none">
+                        <Button variant="danger" size="lg" className="me-1 float-end"> 
                         Save
-                    </Button> 
-                    <Button variant="secondary" size="lg" className="me-1 float-end">
+                        </Button>
+                    </Link>
+                    <Link href={`/courses/${cid}/assignments/`} className="text-decoration-none">
+                        <Button variant="secondary" size="lg" className="me-1 float-end">
                         Cancel
-                    </Button>                            
+                        </Button>
+                    </Link>                           
                 </Col>
             </Row>
             </Form>
