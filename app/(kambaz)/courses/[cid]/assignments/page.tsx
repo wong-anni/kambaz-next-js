@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link"; 
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
@@ -9,13 +11,16 @@ import { LuNotebookPen } from "react-icons/lu";
 import GradePercentage from "./GradePercentage";
 import { IoEllipsisVertical } from "react-icons/io5"; 
 import { FaPlus } from "react-icons/fa6";
+import { useParams } from "next/navigation";
+import * as db from "../../../database";
 
 export default function Assignments() { 
+    const { cid } = useParams();
+    const assignments = db.assignments.filter((assignment: any) => assignment.course === cid);
     return (  
         <div>
         <AssignmentControls /><br /><br /><br />
         <ListGroup className="rounded-0" id="wd-assignments">
-
             <ListGroupItem className="wd-assignment p-0 mb-5 fs-5 border-gray"> 
 
             <div id="wd-assignments-title" className="p-3 ps-2 bg-secondary"> 
@@ -28,62 +33,29 @@ export default function Assignments() {
                 </div>           
             </div>                 
 
-            <ListGroup id="wd-assignment-list" className="rounded-0"> 
-                
-                <ListGroupItem className="wd-assignment-list-item p-3 ps-1 d-flex align-items-center"> <BsGripVertical className="me-2 fs-3" /> <LuNotebookPen className="me-3 fs-3" style={{ color:"green"}} />
-                    <div className="d-flex flex-column">
-                        <Link href="/courses/1234/assignments/123" 
-                            className="wd-assignment-link" > 
-                            <strong>A1</strong>
-                        </Link> 
-                        <span className="wd-assignment-subtitle">
-                            <span className="multiple-modules">Multiple Modules</span> | <strong>Not available until</strong> May 6 at 12:00am | 
-                        </span>
-                        <span className="wd-assignment-subtitle">
-                            <strong>Due </strong>May 13 at 11:59pm | 100 pts
-                        </span>
-                    </div>
-                    <div className="ms-auto d-flex align-items-center gap-2">
-                            <AssignmentItemControlButtons />
-                    </div>
-                </ListGroupItem> 
-                
-                <ListGroupItem className="wd-assignment-list-item p-3 ps-1 d-flex align-items-center"> <BsGripVertical className="me-2 fs-3" /> <LuNotebookPen className="me-3 fs-3" style={{ color:"green"}} />
-                    <div className="d-flex flex-column">
-                    <Link href="/courses/1234/assignments/123" 
-                          className="wd-assignment-link" > 
-                        <strong>A2 </strong>  
-                    </Link>
-                    <span className="wd-assignment-subtitle">
-                        <span className="multiple-modules">Multiple Modules</span> | <strong>Not available until</strong> May 13 at 12:00am | 
-                    </span>
-                    <span className="wd-assignment-subtitle">
-                        <strong>Due </strong>May 20 at 11:59pm | 100 pts 
-                    </span>
-                    </div>
-                    <div className="ms-auto d-flex align-items-center gap-2">
-                        <AssignmentItemControlButtons />
-                    </div>
-                </ListGroupItem>
-
-                <ListGroupItem className="wd-assignment-list-item p-3 ps-1 d-flex align-items-center"> <BsGripVertical className="me-2 fs-3" /> <LuNotebookPen className="me-3 fs-3" style={{ color:"green"}} />
-                    <div className="d-flex flex-column">
-                    <Link href="/courses/1234/assignments/123" 
-                          className="wd-assignment-link" > 
-                        <strong>A3 </strong>  
-                    </Link>
-                    <span className="wd-assignment-subtitle">
-                        <span className="multiple-modules">Multiple Modules</span> | <strong>Not available until</strong> May 20 at 12:00am | 
-                    </span>
-                    <span className="wd-assignment-subtitle">
-                        <strong>Due </strong>May 27 at 11:59pm | 100 pts 
-                    </span>
-                    </div>
-                    <div className="ms-auto d-flex align-items-center gap-2">
-                        <AssignmentItemControlButtons />
-                    </div>
-                </ListGroupItem>
-            </ListGroup>
+            <ListGroup id="wd-assignments-list" className="rounded-0"> 
+                {assignments.map((assignment: any) => (
+                    <ListGroupItem key={assignment._id} 
+                        id="wd-assignment-list-item" 
+                        className="wd-assignment-list-item p-3 ps-1 d-flex align-items-center"> <BsGripVertical className="me-2 fs-3" /> <LuNotebookPen className="me-3 fs-3" style={{ color:"green"}} />
+                        <div className="d-flex flex-column">
+                            <Link href={`/courses/${cid}/assignments/${assignment._id}`}
+                                className="wd-assignment-link mb-0 text-decoration-none text-black" > 
+                                {assignment.title}
+                            </Link> 
+                            <span className="wd-assignment-subtitle">
+                                <span className="multiple-modules">Multiple Modules</span> | <strong>Not available until</strong> {assignment.available} | 
+                            </span>
+                            <span className="wd-assignment-subtitle">
+                                <strong>Due </strong>{assignment.due} | {assignment.points} pts
+                            </span>
+                        </div>
+                        <div className="ms-auto d-flex align-items-center gap-2">
+                                <AssignmentItemControlButtons />
+                        </div>
+                    </ListGroupItem> 
+                ))}
+                </ListGroup>
             </ListGroupItem> 
         </ListGroup > 
         </div>
