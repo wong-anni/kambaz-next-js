@@ -209,7 +209,7 @@
     "_id": "M302",
     "name": "Building the Model for Model, View, Controller (MVC)",
     "description": "Introduction to MVC design pattern.",
-    "course": "RS102",
+    "course": "RS103",
     "lessons": [
       {
         "_id": "L201",
@@ -235,7 +235,7 @@
     "_id": "M303",
     "name": "Other Design Patterns",
     "description": "Design exercise.",
-    "course": "RS102",
+    "course": "RS103",
     "lessons": [
       {
         "_id": "L301",
