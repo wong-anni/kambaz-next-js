@@ -43,6 +43,7 @@ export default function UrlEncoding() {
        onChange={(e) => setB(e.target.value)} 
        className="form-control" 
      /> 
+     
      <h4>Programmatic navigation (using router.push):</h4> 
      <button onClick={goToQueryVersion} className="btn btn-success w-100"> 
        {a} + {b} → Query Params (programmatic) 
@@ -50,17 +51,16 @@ export default function UrlEncoding() {
      <button onClick={goToPathVersion} className="btn btn-success w-100 mt-2"> 
        {a} + {b} → Path Params (programmatic) 
      </button> 
+     
      <h4>Declarative navigation (using &lt;Link&gt;):</h4> 
      <Link 
        href={`${baseUrl}/query-params?a=${encodeURIComponent(a)}&b=${encodeURIComponent(b)}`} 
-       className="btn btn-primary w-100" 
-     > 
+       className="btn btn-primary w-100"> 
        {a} + {b} → Query Params (Link) 
      </Link> 
      <Link 
        href={`${baseUrl}/path-params/${encodeURIComponent(a)}/${encodeURIComponent(b)}`} 
-       className="btn btn-primary w-100 mt-2" 
-     > 
+       className="btn btn-primary w-100 mt-2"> 
        {a} + {b} → Path Params (Link) 
      </Link> 
      </div> 

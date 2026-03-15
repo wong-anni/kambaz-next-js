@@ -1,5 +1,8 @@
 // import useState
 import { useState } from "react";
+import { useSelector } from "react-redux"; 
+import { RootState } from "./store"; 
+import { ListGroup,  ListGroupItem } from "react-bootstrap";
 
 export default function ArrayStateVariable() { 
     // declare array state 
@@ -13,6 +16,10 @@ export default function ArrayStateVariable() {
         setArray(array.filter((item, i) => i !== index)); 
     };
 
+
+    const { todos } = useSelector((state: RootState) => state.todosReducer);
+
+    
     return ( 
         <div id="wd-array-state-variables"> 
             <h2>Array State Variable</h2> 
@@ -25,7 +32,17 @@ export default function ArrayStateVariable() {
                     Delete
                     </button> 
                 </li>))} 
-        </ul><hr/></div>);}
+            </ul>
+        <hr/>
+        <ListGroup> 
+        {todos.map((todo: any) => ( 
+          <ListGroupItem key={todo.id}> 
+            {todo.title} 
+          </ListGroupItem> 
+        ))} 
+      </ListGroup> 
+      <hr />
+        </div>);}
 
 // render item's value 
 // button to delete element 

@@ -25,4 +25,4 @@ export default function PathCalculator() {
      <h2 style={{ color: "green" }}>Sum = {sum}</h2> 
    </div> 
  ); 
-} 
+}
