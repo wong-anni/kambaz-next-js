@@ -45,6 +45,13 @@ export default function Lab4() {
 
             {/* Managing Application State with Redux */}
                 <Link href="/labs/lab4/redux">Redux Examples</Link>
+                <hr /> 
+            {/* Managing State with React Context */}
+                <Link href="./lab4/react-context">React Context Examples</Link>
+                <hr /> 
+            {/* Managing State with Zustand */}
+                <Link href="./lab4/zustand">Zustand Examples</Link> 
+                <hr /> 
             </div>
         </Provider>
     );

@@ -24,16 +24,21 @@ export default function ArrayStateVariable() {
         <div id="wd-array-state-variables"> 
             <h2>Array State Variable</h2> 
             {/* // button calls addElement to append to array iterate over array items */}
-            <button onClick={addElement}>Add Element</button> 
-            <ul> 
+            <button className="btn btn-success mb-2" 
+                    onClick={addElement}>Add Element</button> 
+            <ul className="list-unstyled"> 
                 {array.map((item, index) => ( 
-                <li key={index}> {item} 
-                    <button onClick={() => deleteElement(index)}> 
+                <li key={index} className="border rounded p-2 d-flex justify-content-between align-items-center">
+                    <span className="fw-bold">{item}</span>
+                    <button className="btn btn-danger btn-sm" 
+                            onClick={() => deleteElement(index)}> 
                     Delete
                     </button> 
                 </li>))} 
             </ul>
         <hr/>
+
+
         <ListGroup> 
         {todos.map((todo: any) => ( 
           <ListGroupItem key={todo.id}> 
@@ -42,6 +47,7 @@ export default function ArrayStateVariable() {
         ))} 
       </ListGroup> 
       <hr />
+
         </div>);}
 
 // render item's value 

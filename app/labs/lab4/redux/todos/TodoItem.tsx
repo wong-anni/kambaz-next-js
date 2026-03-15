@@ -13,7 +13,11 @@ export default function TodoItem({ todo                          // remove depen
   return ( 
     <ListGroupItem key={todo.id}>
       <Button onClick={() => dispatch(deleteTodo(todo.id))}      // invoke delete todo with ID, wrap reducer functions with dispatch
-              id="wd-delete-todo-click"> Delete </Button> 
+              id="wd-delete-todo-click"
+              className="float-end"
+              variant="danger"> Delete </Button> 
       <Button onClick={() => dispatch(setTodo(todo))}            // invoke select todo 
-              id="wd-set-todo-click"> Edit </Button> 
+              id="wd-set-todo-click"
+              className="float-end me-2"
+              variant="primary"> Edit </Button> 
       {todo.title}    </ListGroupItem>);}                        // render todo's title 
