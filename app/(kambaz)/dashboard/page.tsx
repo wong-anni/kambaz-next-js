@@ -21,8 +21,7 @@ import { enroll, unenroll } from "../dashboard/reducer";
 
 export default function Dashboard() { 
   const { courses } = useSelector((state: RootState) => state.coursesReducer); 
-  const { currentUser } = useSelector((state: RootState) => state.accountReducer); 
-  // const { enrollments } = db;
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer) as any; 
   const { enrollments } = useSelector((state: RootState) => state.enrollmentsReducer);
   const dispatch = useDispatch();
 
