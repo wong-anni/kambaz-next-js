@@ -37,6 +37,10 @@ export default function Modules() {
   //   setModules(modules.map((m) => (m._id === module._id ? module : m))); 
   // };
 
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer) as any; 
+  const role = (currentUser as any).role;
+  const isStudent = role === "STUDENT";
+
   // retrieve modules state variables
   const { modules } = useSelector((state: RootState) => state.modulesReducer);
   // get dispatch to call reducer functions
@@ -44,7 +48,7 @@ export default function Modules() {
 
   return ( 
     <div> 
-      <ModulesControls  setModuleName={setModuleName} moduleName={moduleName} 
+      <ModulesControls  isStudent={isStudent} setModuleName={setModuleName} moduleName={moduleName} 
         addModule={() => { 
             dispatch(addModule({ name: moduleName, course: cid })); 
             setModuleName("");
@@ -73,6 +77,7 @@ export default function Modules() {
               )} 
               <ModuleControlButtons 
                   moduleId={module._id} 
+                  isStudent={isStudent}
                   deleteModule={(moduleId) => { 
                     dispatch(deleteModule(moduleId)); 
                   }} 

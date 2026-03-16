@@ -7,15 +7,15 @@ import { useState } from "react";
 
 
 export default function ModulesControls(
-  { moduleName, setModuleName, addModule }: 
-  { moduleName: string; setModuleName: (title: string) => void; addModule: () => void; }) { 
+  { isStudent, moduleName, setModuleName, addModule }: 
+  { isStudent: boolean; moduleName: string; setModuleName: (title: string) => void; addModule: () => void; }) { 
   
   const [show, setShow] = useState(false); 
   const handleClose = () => setShow(false); 
   const handleShow = () => setShow(true);
   return (
     <div id="wd-modules-controls" className="text-nowrap">
-      <Button onClick={handleShow} variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn">
+      <Button onClick={handleShow} disabled={isStudent} variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn">
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Module
       </Button>
