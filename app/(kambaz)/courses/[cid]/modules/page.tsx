@@ -79,7 +79,7 @@ export default function Modules() {
                   editModule={(moduleId) => dispatch(editModule(moduleId))} /> </div> 
             {module.lessons && ( 
               <ListGroup className="wd-lessons rounded-0"> 
-                {module.lessons.map((lesson) => ( 
+                {module.lessons.map((lesson: any) => ( 
                   <ListGroupItem key={lesson._id} className="wd-lesson p-3 ps-1"> 
                     <BsGripVertical className="me-2 fs-3" /> {lesson.name} <LessonControlButtons />
                   </ListGroupItem>
