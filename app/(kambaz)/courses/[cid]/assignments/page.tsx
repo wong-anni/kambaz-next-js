@@ -62,7 +62,8 @@ export default function Assignments() {
                             </span>
                         </div>
                         <div className="ms-auto d-flex align-items-center gap-2">
-                                <AssignmentItemControlButtons />
+                                <AssignmentItemControlButtons isStudent={isStudent} assignmentID={assignment._id}
+                                    deleteAssignment={(assignmentID) => {dispatch(deleteAssignment(assignmentID))}} />
                         </div>
                     </ListGroupItem> 
                 ))}

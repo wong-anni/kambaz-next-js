@@ -17,11 +17,13 @@ import { addNewCourse, deleteCourse, updateCourse } from "../courses/reducer";
 
 import * as db from "../database"; 
 import { RootState } from "../store"; 
+import { enroll, unenroll } from "../dashboard/reducer";
 
 export default function Dashboard() { 
   const { courses } = useSelector((state: RootState) => state.coursesReducer); 
   const { currentUser } = useSelector((state: RootState) => state.accountReducer); 
-  const { enrollments } = db;
+  // const { enrollments } = db;
+  const { enrollments } = useSelector((state: RootState) => state.enrollmentsReducer);
   const dispatch = useDispatch();
 
   const role = currentUser?.role;
@@ -47,11 +49,16 @@ export default function Dashboard() {
   
   return ( 
     <div id="wd-dashboard"> 
-      <h1 id="wd-dashboard-title">Dashboard</h1> <hr /> 
+      <div className="d-flex align-items-center justify-content-between">
+        <h1 id="wd-dashboard-title">Dashboard</h1>
         <button 
           onClick={() => { setShowAllCourses(!showAllCourses); }} className="btn btn-danger" > 
           Enrollments 
         </button>
+      </div>
+      <hr />
+      
+        
       {/* 
       // add a button to invoke addNewCourse. 
       // Note no argument syntax */}
@@ -74,7 +81,7 @@ export default function Dashboard() {
                    disabled={isStudent}
                    onChange={(e) => setCourse({ ...course, description: e.target.value }) } /> <hr />
 
-      <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr /> 
+      <h2 id="wd-dashboard-published">Published Courses ({showAllCourses ? courses.length : filteredCourses.length})</h2> <hr /> 
       <div id="wd-dashboard-courses"> 
 
       <Row xs={1} md={5} className="g-4">
@@ -91,53 +98,70 @@ export default function Dashboard() {
                 )
               )
             }) 
-        .map((course) => (
-        <Col className="wd-dashboard-course" style={{ width: "300px" }} key={course._id}>
-          <Card>
-            <Link href={`/courses/${course._id}/home`} className="wd-dashboard-course-link text-decoration-none text-dark">
-              <CardImg variant="top" src= {course.image} width="100%" height={160} alt="reactjs" />
-              <CardBody>
-                <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden"> {course.name} </CardTitle>
-                <CardText className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}> 
-                      {course.description} </CardText>
-                
-                <Button variant="primary"> Go </Button> 
-                
-                {/* 
-                // Delete button next to the course's 
-                // name to invoke deleteCourse when clicked 
-                // passing the course's ID and preventing 
-                // the Link's default behavior to navigate 
-                // to Course Screen */}
-                <Button disabled={isStudent} 
-                      onClick={(event) => { 
-                      event.preventDefault(); 
-                      deleteCourse(course._id); 
-                    }} className="btn btn-danger float-end" 
-                    id="wd-delete-course-click"> 
-                    Delete 
-                </Button>
+            .map((course) => {const isEnrolled = enrollments.some(
+                  (e) => e.user === currentUser._id && e.course === course._id
+                );
+              return (
+                  <Col className="wd-dashboard-course" style={{ width: "300px" }} key={course._id}>
+                    <Card>
+                      <Link href={`/courses/${course._id}/home`} className="wd-dashboard-course-link text-decoration-none text-dark">
+                        <CardImg variant="top" src= {course.image} width="100%" height={160} alt="reactjs" />
+                        <CardBody>
+                          <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden"> {course.name} </CardTitle>
+                          <CardText className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}> 
+                                {course.description} </CardText>
+                          <div className="mb-2 mt-auto">
+                            <Button variant="primary"> Go </Button> 
+                            
+                            {/* 
+                            // Delete button next to the course's 
+                            // name to invoke deleteCourse when clicked 
+                            // passing the course's ID and preventing 
+                            // the Link's default behavior to navigate 
+                            // to Course Screen */}
+                            <Button disabled={isStudent} 
+                                  onClick={(event) => { 
+                                  event.preventDefault(); 
+                                  dispatch(deleteCourse(course._id)); 
+                                }} className="btn btn-danger float-end" 
+                                id="wd-delete-course-click"> 
+                                Delete 
+                            </Button>
 
-                {/* 
-                // Edit button to copy the course 
-                // to be edited into the form so we can 
-                // edit it. Prevent default to navigate 
-                // to Course screen */}
-                <Button id="wd-edit-course-click" disabled={isStudent}
-                  onClick={(event) => { 
-                    event.preventDefault(); 
-                    setCourse(course); 
-                  }} 
-                  className="btn btn-warning me-2 float-end" > 
-                  Edit 
-                </Button>
+                            {/* 
+                            // Edit button to copy the course 
+                            // to be edited into the form so we can 
+                            // edit it. Prevent default to navigate 
+                            // to Course screen */}
+                            <Button id="wd-edit-course-click" disabled={isStudent}
+                              onClick={(event) => { 
+                                event.preventDefault(); 
+                                setCourse(course); 
+                              }} 
+                              className="btn btn-warning me-2 float-end" > 
+                              Edit 
+                            </Button>
+                          </div>
+                          <Button variant={isEnrolled ? "danger" : "success"}
+                            onClick={(event) => {
+                              event.preventDefault();
 
-              </CardBody>
-            </Link>
-          </Card>
-        </Col>
-      ))}
-</Row>
+                              if (isEnrolled) {
+                                dispatch(unenroll({ user: currentUser._id, course: course._id }))
+                              } else {
+                                dispatch(enroll({ user: currentUser._id, course: course._id }))
+                              }
+                            }}
+                          >
+                            {isEnrolled ? "Unenroll" : "Enroll"}
+                          </Button>
+
+                        </CardBody>
+                      </Link>
+                    </Card>
+                  </Col>
+              )})}
+      </Row>
 
       </div> 
     </div> 

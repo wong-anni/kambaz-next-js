@@ -3,6 +3,7 @@ import coursesReducer from "./courses/reducer";
 import modulesReducer from "./courses/[cid]/modules/reducer"; 
 import accountReducer from "./account/reducer"; 
 import assignmentsReducer from "./courses/[cid]/assignments/reducer"
+import enrollmentsReducer from "./dashboard/reducer"
 
 
 // A store that can hold all Kambaz related data starting with the courses
@@ -13,6 +14,7 @@ const store = configureStore({
     modulesReducer, 
     accountReducer,
     assignmentsReducer,
+    enrollmentsReducer
   }, 
 }); 
 export type RootState = ReturnType<typeof store.getState>; 
