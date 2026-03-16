@@ -19,36 +19,59 @@ import * as db from "../database";
 import { RootState } from "../store"; 
 
 export default function Dashboard() { 
+  const { courses } = useSelector((state: RootState) => state.coursesReducer); 
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer); 
+  const { enrollments } = db;
+  const dispatch = useDispatch();
+
+  const role = currentUser?.role;
+  const isStudent = role === "STUDENT";
+
+  const [showAllCourses, setShowAllCourses] = useState(false);
+
   const [course, setCourse] = useState<any>({
     _id: "0", name: "New Course", number: "New Number", 
     startDate: "2023-09-10", endDate: "2023-12-15", 
     image: "/images/reactjs.jpg", description: "New Description" 
   });
 
-  const { courses } = useSelector((state: RootState) => state.coursesReducer); 
-  const { currentUser } = useSelector((state: RootState) => state.accountReducer); 
-  const { enrollments } = db;
-  const dispatch = useDispatch(); 
+  const filteredCourses = courses.filter((course) => 
+    currentUser &&
+    enrollments.some( 
+      (enrollment) => 
+        enrollment.user === currentUser._id && 
+        enrollment.course === course._id 
+      ));
+
+
+  
   return ( 
     <div id="wd-dashboard"> 
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr /> 
-
+        <button 
+          onClick={() => { setShowAllCourses(!showAllCourses); }} className="btn btn-danger" > 
+          Enrollments 
+        </button>
       {/* 
       // add a button to invoke addNewCourse. 
       // Note no argument syntax */}
       <h5>New Course 
           <button className="btn btn-primary float-end" 
+                  disabled={isStudent}
                   id="wd-add-new-course-click" 
                   onClick={() => dispatch(addNewCourse(course))} > 
                   Add </button>
           <button className="btn btn-warning float-end me-2" 
+                  disabled={isStudent}
                   onClick={() => dispatch(updateCourse(course))} id="wd-update-course-click"> 
                   Update </button> 
       </h5><br /> 
       <FormControl value={course.name} 
+                   disabled={isStudent}
                    className="mb-2" 
                    onChange={(e) => setCourse({ ...course, name: e.target.value }) } /> 
       <FormControl value={course.description} as="textarea" rows={3}
+                   disabled={isStudent}
                    onChange={(e) => setCourse({ ...course, description: e.target.value }) } /> <hr />
 
       <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr /> 
@@ -56,13 +79,18 @@ export default function Dashboard() {
 
       <Row xs={1} md={5} className="g-4">
         {courses
-          .filter((course: any) => 
-            currentUser &&
-            enrollments.some( 
-              (enrollment: any) => 
-                enrollment.user === currentUser._id && 
-                enrollment.course === course._id 
-              ))
+            .filter((course) => {
+              if (showAllCourses) return true;
+
+              return (
+                currentUser &&
+                enrollments.some( 
+                  (enrollment) => 
+                    enrollment.user === currentUser._id && 
+                    enrollment.course === course._id 
+                )
+              )
+            }) 
         .map((course) => (
         <Col className="wd-dashboard-course" style={{ width: "300px" }} key={course._id}>
           <Card>
@@ -81,7 +109,8 @@ export default function Dashboard() {
                 // passing the course's ID and preventing 
                 // the Link's default behavior to navigate 
                 // to Course Screen */}
-                <Button onClick={(event) => { 
+                <Button disabled={isStudent} 
+                      onClick={(event) => { 
                       event.preventDefault(); 
                       deleteCourse(course._id); 
                     }} className="btn btn-danger float-end" 
@@ -94,7 +123,7 @@ export default function Dashboard() {
                 // to be edited into the form so we can 
                 // edit it. Prevent default to navigate 
                 // to Course screen */}
-                <Button id="wd-edit-course-click" 
+                <Button id="wd-edit-course-click" disabled={isStudent}
                   onClick={(event) => { 
                     event.preventDefault(); 
                     setCourse(course); 

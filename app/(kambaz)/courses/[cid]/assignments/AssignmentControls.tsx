@@ -5,15 +5,19 @@ import Form from "react-bootstrap/Form";
 import FormControl from "react-bootstrap/FormControl";
 import { CiSearch } from "react-icons/ci";
 import InputGroup from "react-bootstrap/InputGroup";
+import Link from "next/link";
 
 
-export default function AssignmentControls() {
+export default function AssignmentControls({ isStudent, cid }: { isStudent: boolean, cid: string }) {
   return (
     <div id="wd-modules-controls" className="text-nowrap">
-      <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-assignment">
-        <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
-        Assignment
-      </Button>
+      <Link href={`/courses/${cid}/assignments/new`}>
+        <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-assignment"
+                disabled={isStudent}> 
+          <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} /> 
+          Assignment 
+        </Button>
+      </Link>
 
       <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-add-assignment-group">
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
