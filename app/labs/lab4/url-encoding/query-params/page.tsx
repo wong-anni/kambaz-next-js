@@ -1,7 +1,8 @@
 "use client";
 import { useSearchParams } from "next/navigation"; 
- 
-export default function QueryCalculator() { 
+import { Suspense } from "react";
+
+function QueryCalculator() {
  const searchParams = useSearchParams(); 
  
  const aRaw = searchParams.get("a") || "0"; 
@@ -27,3 +28,11 @@ export default function QueryCalculator() {
    </div> 
  ); 
 } 
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <QueryCalculator />
+    </Suspense>
+  );
+}
