@@ -1,14 +1,24 @@
 import { ListGroupItem, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";                       // import useDispatch to invoke reducer functions 
 import { deleteTodo, setTodo } from "./todosReducer";            // deleteTodo and setTodo
+// Define the Todo type
+type Todo = {
+  id: string;
+  title: string;
+};
 
-export default function TodoItem({ todo                          // remove dependency with parent component
+// Define props type
+type TodoItemProps = {
+  todo: Todo;
+};
+
+export default function TodoItem({ todo,  }: TodoItemProps                       // remove dependency with parent component
 //                                                               // create dispatch instance to invoke reducer functions
 //     , deleteTodo, setTodo }: {                                       // breaks out todo item
 //   todo: { id: string; title: string };                               // todo to render 
 //   deleteTodo: (id: string) => void;                                  // event handler to remove todo
 //   setTodo: (todo: { id: string; title: string }) => void;            // event handler to select todo
-}) { 
+) { 
     const dispatch = useDispatch();
   return ( 
     <ListGroupItem key={todo.id}>

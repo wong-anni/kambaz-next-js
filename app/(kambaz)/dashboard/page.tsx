@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link"; 
 import Card from "react-bootstrap/Card";
 import CardBody from "react-bootstrap/CardBody";
@@ -5,21 +7,63 @@ import CardImg from "react-bootstrap/CardImg"; //replaces html img tag
 import CardTitle from "react-bootstrap/CardTitle"; //replaces html h5 tag
 import CardText from "react-bootstrap/CardText"; //replaces html p tag
 import Button from "react-bootstrap/Button"; //replaces html button tag
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, FormControl } from "react-bootstrap";
 
-import * as db from "../database";
+import { useState } from "react"; // add useState hook
+import { v4 as uuidv4 } from "uuid";  // install the uuid library if necessary
 
+import { useDispatch, useSelector } from "react-redux"; 
+import { addNewCourse, deleteCourse, updateCourse, setCourses } from "../courses/reducer"; 
+
+import * as db from "../database"; 
+import { RootState } from "../store"; 
 
 export default function Dashboard() { 
-  const courses = db.courses;
+  const [course, setCourse] = useState<any>({
+    _id: "0", name: "New Course", number: "New Number", 
+    startDate: "2023-09-10", endDate: "2023-12-15", 
+    image: "/images/reactjs.jpg", description: "New Description" 
+  });
+
+  const { courses } = useSelector((state: RootState) => state.coursesReducer); 
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer); 
+  const { enrollments } = db;
+  const dispatch = useDispatch(); 
   return ( 
     <div id="wd-dashboard"> 
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr /> 
+
+      {/* 
+      // add a button to invoke addNewCourse. 
+      // Note no argument syntax */}
+      <h5>New Course 
+          <button className="btn btn-primary float-end" 
+                  id="wd-add-new-course-click" 
+                  onClick={() => dispatch(addNewCourse(course))} > 
+                  Add </button>
+          <button className="btn btn-warning float-end me-2" 
+                  onClick={() => dispatch(updateCourse(course))} id="wd-update-course-click"> 
+                  Update </button> 
+      </h5><br /> 
+      <FormControl value={course.name} 
+                   className="mb-2" 
+                   onChange={(e) => setCourse({ ...course, name: e.target.value }) } /> 
+      <FormControl value={course.description} rows={3}
+                   onChange={(e) => setCourse({ ...course, description: e.target.value }) } /> <hr />
+
       <h2 id="wd-dashboard-published">Published Courses ({courses.length})</h2> <hr /> 
       <div id="wd-dashboard-courses"> 
 
       <Row xs={1} md={5} className="g-4">
-        {courses.map((course) => (
+        {courses
+          .filter((course) => 
+            currentUser &&
+            enrollments.some( 
+              (enrollment) => 
+                enrollment.user === currentUser._id && 
+                enrollment.course === course._id 
+              ))
+        .map((course) => (
         <Col className="wd-dashboard-course" style={{ width: "300px" }} key={course._id}>
           <Card>
             <Link href={`/courses/${course._id}/home`} className="wd-dashboard-course-link text-decoration-none text-dark">
@@ -28,146 +72,42 @@ export default function Dashboard() {
                 <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden"> {course.name} </CardTitle>
                 <CardText className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}> 
                       {course.description} </CardText>
+                
                 <Button variant="primary"> Go </Button> 
+                
+                {/* 
+                // Delete button next to the course's 
+                // name to invoke deleteCourse when clicked 
+                // passing the course's ID and preventing 
+                // the Link's default behavior to navigate 
+                // to Course Screen */}
+                <Button onClick={(event) => { 
+                      event.preventDefault(); 
+                      deleteCourse(course._id); 
+                    }} className="btn btn-danger float-end" 
+                    id="wd-delete-course-click"> 
+                    Delete 
+                </Button>
+
+                {/* 
+                // Edit button to copy the course 
+                // to be edited into the form so we can 
+                // edit it. Prevent default to navigate 
+                // to Course screen */}
+                <Button id="wd-edit-course-click" 
+                  onClick={(event) => { 
+                    event.preventDefault(); 
+                    setCourse(course); 
+                  }} 
+                  className="btn btn-warning me-2 float-end" > 
+                  Edit 
+                </Button>
+
               </CardBody>
             </Link>
           </Card>
         </Col>
       ))}
-
-
-
-
-        {/* // <Col className="wd-dashboard-course" style={{ width: "300px" }}>
-        //   <Card>
-        //     <Link href="/courses/1234/home" className="wd-dashboard-course-link text-decoration-none text-dark">
-        //       <CardImg variant="top" src="/images/linearprof.jpg" width="100%" height={160} alt="linearprof" />
-        //       <CardBody>
-        //         <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden"> MATH2331 Linear Algebra </CardTitle>
-        //         <CardText className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}> 
-        //               Linear algebra course </CardText>
-        //         <Button variant="primary"> Go </Button> 
-        //       </CardBody>
-        //       </Link>
-        //   </Card>
-        // </Col>
-
-        // <Col className="wd-dashboard-course" style={{ width: "300px" }}>
-        //   <Card>
-        //     <Link href="/courses/1234/home" className="wd-dashboard-course-link text-decoration-none text-dark">
-        //       <CardImg variant="top" src="/images/oodrage.jpg" width="100%" height={160} alt="oodrage" />
-        //       <CardBody>
-        //         <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden"> CS3100 OOD </CardTitle>
-        //         <CardText className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}> 
-        //               Object Oriented Design course   </CardText>
-        //         <Button variant="primary"> Go </Button> 
-        //       </CardBody>
-        //       </Link>
-        //   </Card>
-        // </Col>
-
-        // <Col className="wd-dashboard-course" style={{ width: "300px" }}>
-        //   <Card>
-        //     <Link href="/courses/1234/home" className="wd-dashboard-course-link text-decoration-none text-dark">
-        //       <CardImg variant="top" src="/images/databaseprof.jpg" width="100%" height={160} alt="databaseprof" />
-        //       <CardBody>
-        //         <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden"> CS3200 Intro to Databases </CardTitle>
-        //         <CardText className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}> 
-        //               Intro to Databases course    </CardText>
-        //         <Button variant="primary"> Go </Button> 
-        //       </CardBody>
-        //       </Link>
-        //   </Card>
-        // </Col>
-
-        // <Col className="wd-dashboard-course" style={{ width: "300px" }}>
-        //   <Card>
-        //     <Link href="/courses/1234/home" className="wd-dashboard-course-link text-decoration-none text-dark">
-        //       <CardImg variant="top" src="/images/gameprof.jpg" width="100%" height={160} alt="gameprof" />
-        //       <CardBody>
-        //         <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden"> GAME1110 Games and Society </CardTitle>
-        //         <CardText className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}> 
-        //               Games and Society course     </CardText>
-        //         <Button variant="primary"> Go </Button> 
-        //       </CardBody>
-        //       </Link>
-        //   </Card>
-        // </Col>
-
-        // <Col className="wd-dashboard-course" style={{ width: "300px" }}>
-        //   <Card>
-        //     <Link href="/courses/1234/home" className="wd-dashboard-course-link text-decoration-none text-dark">
-        //       <CardImg variant="top" src="/images/statsprof.jpg" width="100%" height={160} alt="statsprof" />
-        //       <CardBody>
-        //         <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden"> MATH3081 Probability </CardTitle>
-        //         <CardText className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}> 
-        //               Probability and Statistics course     </CardText>
-        //         <Button variant="primary"> Go </Button> 
-        //       </CardBody>
-        //       </Link>
-        //   </Card>
-        // </Col>
-
-        // <Col className="wd-dashboard-course" style={{ width: "300px" }}>
-        //   <Card>
-        //     <Link href="/courses/1234/home" className="wd-dashboard-course-link text-decoration-none text-dark">
-        //       <CardImg variant="top" src="/images/systemsprof.jpg" width="100%" height={160} alt="systemsprof" />
-        //       <CardBody>
-        //         <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden"> CS3650 Computer Systems </CardTitle>
-        //         <CardText className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}> 
-        //               Computer Systems course      </CardText>
-        //         <Button variant="primary"> Go </Button> 
-        //       </CardBody>
-        //       </Link>
-        //   </Card>
-        // </Col>
-
-        // <Col className="wd-dashboard-course" style={{ width: "300px" }}>
-        //   <Card>
-        //     <Link href="/courses/1234/home" className="wd-dashboard-course-link text-decoration-none text-dark">
-        //       <CardImg variant="top" src="/images/mathreasoning.jpg" width="100%" height={160} alt="mathreasoning" />
-        //       <CardBody>
-        //         <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden"> MATH1365 Intro to Math Reasoning </CardTitle>
-        //         <CardText className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}> 
-        //               Introduction to Mathematical Reasoning course      </CardText>
-        //         <Button variant="primary"> Go </Button> 
-        //       </CardBody>
-        //       </Link>
-        //   </Card>
-        // </Col>
-
-        // <Col className="wd-dashboard-course" style={{ width: "300px" }}>
-        //   <Card>
-        //     <Link href="/courses/1234/home" className="wd-dashboard-course-link text-decoration-none text-dark">
-        //       <CardImg variant="top" src="/images/algoprof.jpg" width="100%" height={160} alt="algoprof" />
-        //       <CardBody>
-        //         <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden"> CS3000 Algo </CardTitle>
-        //         <CardText className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}> 
-        //               Algorithms and Data course      </CardText>
-        //         <Button variant="primary"> Go </Button> 
-        //       </CardBody>
-        //       </Link>
-        //   </Card>
-        // </Col>
-
-        // <Col className="wd-dashboard-course" style={{ width: "300px" }}>
-        //   <Card>
-        //     <Link href="/courses/1234/home" className="wd-dashboard-course-link text-decoration-none text-dark">
-        //       <CardImg variant="top" src="/images/discreteprof.jpg" width="100%" height={160} alt="discreteprof" />
-        //       <CardBody>
-        //         <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden"> CS1800 Discrete Structures </CardTitle>
-        //         <CardText className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}> 
-        //               Discrete Structures course       </CardText>
-        //         <Button variant="primary"> Go </Button> 
-        //       </CardBody>
-        //       </Link>
-        //   </Card>
-        // </Col> */}
-
-
-
-
-
 </Row>
 
       </div> 

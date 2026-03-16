@@ -61,7 +61,7 @@ export const TodosProvider = ({ children }: { children: ReactNode }) => {
    updateTodo, 
    setTodo
  }; 
- 
+
  return ( 
    <TodosContext.Provider value={value}>{children}</TodosContext.Provider>
  ); 
@@ -70,8 +70,5 @@ export const TodosProvider = ({ children }: { children: ReactNode }) => {
 // Create a custom hook to use the todo context 
 export const useTodo = () => { 
  const context = useContext(TodosContext); 
- if (!context) {
-    throw new Error("useTodos must be used within a TodosProvider");
-  }
  return context; 
 }; 
