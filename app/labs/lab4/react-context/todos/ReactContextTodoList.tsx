@@ -1,9 +1,9 @@
 "use client"; 
-import { useTodo } from "./todosContext"; 
+import { useTodos } from "./todosContext"; 
 import { ListGroup, ListGroupItem, FormControl, Button } from "react-bootstrap"
 
 export default function TodosContext() { 
- const { todo, todos, addTodo, deleteTodo, updateTodo, setTodo } = useTodo(); 
+ const { todo, todos, addTodo, deleteTodo, updateTodo, setTodo } = useTodos(); 
  
  return ( 
    <div id="wd-todo-list-context"> 
