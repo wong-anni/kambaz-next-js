@@ -13,7 +13,7 @@ import { useState } from "react"; // add useState hook
 import { v4 as uuidv4 } from "uuid";  // install the uuid library if necessary
 
 import { useDispatch, useSelector } from "react-redux"; 
-import { addNewCourse, deleteCourse, updateCourse, setCourses } from "../courses/reducer"; 
+import { addNewCourse, deleteCourse, updateCourse } from "../courses/reducer"; 
 
 import * as db from "../database"; 
 import { RootState } from "../store"; 
