@@ -16,11 +16,9 @@ import store from "./store";
 import { Provider } from "react-redux";
 
 export default function Lab4() {
-    // implement callback function
     function sayHello() { 
         alert("Hello"); 
     } 
-
     return(
         <Provider store={store}>
             <div>
