@@ -5,6 +5,8 @@ import PathParameters from "./PathParameters";
 import QueryParameters from "./QueryParameters";
 import WorkingWithObjects from "./WorkingWithObjects";
 import WorkingWithArrays from "./WorkingWithArrays";
+import HttpClient from "./HttpClient";
+import WorkingWithObjectsAsynchronously from "./WorkingWithObjectsAsynchronously";
 
 export default function Lab5() { 
   return ( 
@@ -21,6 +23,8 @@ export default function Lab5() {
       <QueryParameters /> 
       <WorkingWithObjects />
       <WorkingWithArrays /> 
+      <HttpClient />
+      <WorkingWithObjectsAsynchronously /> 
     </div> 
 );} 
 
