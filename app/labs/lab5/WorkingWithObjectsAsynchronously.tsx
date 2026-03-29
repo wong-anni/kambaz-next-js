@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import * as client from "./client"; 
 
 type Assignment = {
+  id: number;
   title: string;
   description: string;
   due: string;
@@ -11,8 +12,9 @@ type Assignment = {
 };
 
 export default function WorkingWithObjectsAsynchronously() { 
-//   const [assignment, setAssignment] = useState<any>({}); 
+  // const [assignment, setAssignment] = useState<any>({}); 
   const [assignment, setAssignment] = useState<Assignment>({
+    id: 1, 
     title: "",
     description: "",
     due: "",
@@ -26,9 +28,9 @@ export default function WorkingWithObjectsAsynchronously() {
     const updatedAssignment = await client.updateTitle(title); 
     setAssignment(updatedAssignment); 
   }; 
-//   useEffect(() => { 
-//     fetchAssignment(); 
-//   }, []); 
+  // useEffect(() => { 
+  //   fetchAssignment(); 
+  // }, []); 
     useEffect(() => { 
     const fetchData = async () => {
         const assignment = await client.fetchAssignment();
