@@ -8,6 +8,7 @@ import WorkingWithArrays from "./WorkingWithArrays";
 import HttpClient from "./HttpClient";
 import WorkingWithObjectsAsynchronously from "./WorkingWithObjectsAsynchronously";
 import WorkingWithArraysAsynchronously from "./WorkingWithArraysAsynchronously";
+import CalculatorNextWebApiClient from "./CalculatorNextWebApiClient";
 
 export default function Lab5() { 
   return ( 
@@ -27,6 +28,7 @@ export default function Lab5() {
       <HttpClient />
       <WorkingWithObjectsAsynchronously /> 
       <WorkingWithArraysAsynchronously /> 
+      <CalculatorNextWebApiClient /> 
     </div> 
 );} 
 
