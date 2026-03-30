@@ -29,7 +29,7 @@ type Enrollment = {
 
 export default function Dashboard() { 
   const { courses } = useSelector((state: RootState) => state.coursesReducer); 
-  const { currentUser } = useSelector((state: RootState) => state.accountReducer); 
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer) as any; 
   const { enrollments } = useSelector((state: RootState) => state.enrollmentsReducer) as { enrollments: Enrollment[] };
   const dispatch = useDispatch();
 
