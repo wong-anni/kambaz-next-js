@@ -14,12 +14,36 @@ import { FaPlus } from "react-icons/fa6";
 import { useParams } from "next/navigation";
 import * as db from "../../../database";
 
+import { useState, useEffect } from "react";
+import * as client from "./client";
+import { setAssignments, addAssignment, deleteAssignment, updateAssignment, editAssignment } from "./reducer";
+import { useSelector, useDispatch } from "react-redux"; 
+import { RootState } from "../../../store"; 
+
 export default function Assignments() { 
     const { cid } = useParams();
-    const assignments = db.assignments.filter((assignment: any) => assignment.course === cid);
+    const { assignments } = useSelector((state: RootState) => state.assignmentsReducer); 
+    const { currentUser } = useSelector((state: RootState) => state.accountReducer); 
+    const role = (currentUser as any).role;
+    const isStudent = role === "STUDENT";
+    const dispatch = useDispatch();
+
+    const fetchAssignments = async () => { 
+        const assignments = await client.findAssignmentsForCourse(cid as string); 
+        dispatch(setAssignments(assignments)); 
+    }; 
+
+    const onRemoveAssignment = async (assignmentId: string) => { 
+        await client.deleteAssignment(assignmentId); 
+        dispatch(setAssignments(assignments.filter((a: any) => a._id !== assignmentId))); 
+        };
+
+    useEffect(() => { 
+        fetchAssignments(); 
+    }, []); 
     return (  
         <div>
-        <AssignmentControls /><br /><br /><br />
+        <AssignmentControls isStudent={isStudent} cid={cid as string} /><br /><br /><br />
         <ListGroup className="rounded-0" id="wd-assignments">
             <ListGroupItem className="wd-assignment p-0 mb-5 fs-5 border-gray"> 
 
@@ -34,7 +58,8 @@ export default function Assignments() {
             </div>                 
 
             <ListGroup id="wd-assignments-list" className="rounded-0"> 
-                {assignments.map((assignment: any) => (
+                {assignments
+                .map((assignment: any) => (
                     <ListGroupItem key={assignment._id} 
                         id="wd-assignment-list-item" 
                         className="wd-assignment-list-item p-3 ps-1 d-flex align-items-center"> <BsGripVertical className="me-2 fs-3" /> <LuNotebookPen className="me-3 fs-3" style={{ color:"green"}} />
@@ -51,7 +76,8 @@ export default function Assignments() {
                             </span>
                         </div>
                         <div className="ms-auto d-flex align-items-center gap-2">
-                                <AssignmentItemControlButtons />
+                                <AssignmentItemControlButtons isStudent={isStudent} assignmentID={assignment._id}
+                                    deleteAssignment={(assignmentID) => onRemoveAssignment(assignmentID)} />
                         </div>
                     </ListGroupItem> 
                 ))}
