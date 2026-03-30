@@ -3,13 +3,16 @@ import { enrollments } from "../database";
 import { v4 as uuidv4 } from "uuid";
 
 const initialState = { 
- enrollments: enrollments, 
+ enrollments: [], 
 }; 
 
 const enrollmentsSlice = createSlice({
   name: "enrollments",
   initialState,
   reducers: {
+    setEnrollments: (state, action) => {
+      state.enrollments = action.payload;
+    },
     enroll: (state, { payload: enrollment }) => {
       const newEnrollment = { ...enrollment, _id: uuidv4() };
       state.enrollments = [...state.enrollments, newEnrollment] as any;
@@ -22,6 +25,6 @@ const enrollmentsSlice = createSlice({
   }
 })
 
-export const { enroll, unenroll } = 
+export const { setEnrollments, enroll, unenroll } = 
  enrollmentsSlice.actions; 
 export default enrollmentsSlice.reducer;

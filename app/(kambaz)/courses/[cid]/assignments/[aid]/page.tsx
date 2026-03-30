@@ -11,11 +11,28 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../../store"; 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { addAssignment, updateAssignment } from "../reducer";
+import { setAssignments, addAssignment, updateAssignment } from "../reducer";
+import * as client from "../client";
+
+type Assignment = {
+  _id: string;
+  title: string;
+  course: string;
+  available: string;
+  due: string;
+  points: number;
+  description: string;
+  assignmentGroup: string;
+  display: string;
+  type: string;
+  options: string;
+  assign: string;
+  until: string;
+};
 
 export default function AssignmentEditor() {
     const { cid, aid } = useParams();
-    const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
+    const { assignments } = useSelector((state: RootState) => state.assignmentsReducer) as { assignments: Assignment[] };
     const assignment = assignments.find((assignment: any) => assignment._id === aid);
     const { currentUser } = useSelector((state: RootState) => state.accountReducer);
     const isStudent = (currentUser as any)?.role === "STUDENT";
@@ -41,6 +58,19 @@ export default function AssignmentEditor() {
 
         until: assignment?.until || ""
     });
+
+    const onCreateAssignmentForCourse = async () => { 
+        if (!cid) return; 
+        const assignment = await client.createAssignmentForCourse(cid as string, assignmentState); 
+        dispatch(setAssignments([...assignments, assignment])); 
+    }; 
+
+    const onUpdateAssignment = async (assignment: any) => { 
+        await client.updateAssignment(assignment); 
+        const newAssignments = assignments.map((a: any) => a._id === assignment._id ? assignment : a ); 
+        dispatch(setAssignments(newAssignments)); 
+    }; 
+
     return (
         <div id="wd-assignments-editor">
             <Form>
@@ -262,15 +292,15 @@ export default function AssignmentEditor() {
             <Row>
                 <Col align="right">
                     <Button variant="danger" size="lg" className="me-1 float-end"
-                        onClick={() => {
+                        onClick={async () => {
                             if (aid === "new") {
-                            dispatch(addAssignment(assignmentState));
+                            await onCreateAssignmentForCourse();
                             } else {
-                            dispatch(updateAssignment(assignmentState));
+                            await onUpdateAssignment(assignmentState);
                             }
 
                             router.push(`/courses/${cid}/assignments`);
-                        }}>
+                    }}>
                         Save
                     </Button>
                     <Button variant="secondary" size="lg" className="me-1 float-end"
