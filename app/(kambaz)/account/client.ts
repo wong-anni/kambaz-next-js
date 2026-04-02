@@ -1,4 +1,5 @@
 import axios from "axios"; 
+
 const axiosWithCredentials = axios.create({ withCredentials: true }); 
 export const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER; 
 export const USERS_API = `${HTTP_SERVER}/api/users`; 
@@ -25,5 +26,10 @@ export const profile = async () => {
 
 export const signout = async () => { 
   const response = await axiosWithCredentials.post(`${USERS_API}/signout`); 
+  return response.data; 
+};
+
+export const findAllUsers = async () => { 
+  const response = await axiosWithCredentials.get(`${USERS_API}`); 
   return response.data; 
 };

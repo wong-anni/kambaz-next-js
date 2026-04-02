@@ -3,7 +3,8 @@
 import { Table } from "react-bootstrap"; 
 import { FaUserCircle } from "react-icons/fa"; 
 
-export default function PeopleTable({ users = [], fetchUsers }: { users?: any[]; fetchUsers: () => void; }) {     return ( 
+export default function PeopleTable({ users = [{ _id: 1, firstName: "John", lastName: "Doe", loginId: "jdoe", section: "A", role: "Student", lastActivity: "2023-10-01", totalActivity: 100 }], fetchUsers }: { users?: any[]; fetchUsers: () => void; }) { 
+  return ( 
     <div id="wd-people-table"> 
         <Table striped> 
             <thead> 
