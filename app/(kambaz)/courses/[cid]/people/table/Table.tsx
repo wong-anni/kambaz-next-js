@@ -32,8 +32,9 @@ export default function PeopleTable({ users = [], fetchUsers }: { users?: any[];
                             <td className="wd-full-name text-nowrap">
                                 <span className="text-decoration-none" 
                                     onClick={() => { 
-                                    setShowDetails(true); 
-                                    setShowUserId(user._id); 
+                                        // console.log("CLICK WORKS"); // testing click event
+                                    setShowUserId(user._id);
+                                    setShowDetails(true);  
                                     }} >
                                 <FaUserCircle className="me-2 fs-1 text-secondary" />
                                 <span className="wd-first-name">{user.firstName} </span>
