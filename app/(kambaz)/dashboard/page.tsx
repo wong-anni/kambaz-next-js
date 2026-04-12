@@ -81,7 +81,6 @@ export default function Dashboard() {
         (e: Enrollment) => e.user === currentUser._id && e.course === course._id
       )
     );
-
     const fetchEnrollments = async () => {
       const enrollments = await enrollmentClient.findEnrollmentsForUser(currentUser._id);
       dispatch(setEnrollments(enrollments));
@@ -92,10 +91,9 @@ export default function Dashboard() {
 
     const updated = await enrollmentClient.findEnrollmentsForUser(currentUser._id);
     dispatch(setEnrollments(updated));
-
-    const allCourses = await client.fetchAllCourses();
-    setAllCourses(allCourses);
+    await client.fetchAllCourses();
     fetchCourses();
+    fetchEnrollments();
   }; 
 
   const handleUnenrollments = async (courseId: string) => {
@@ -103,10 +101,9 @@ export default function Dashboard() {
 
     const updated = await enrollmentClient.findEnrollmentsForUser(currentUser._id);
     dispatch(setEnrollments(updated));
-
-    const allCourses = await client.fetchAllCourses();
-    setAllCourses(allCourses);
+    await client.fetchAllCourses();
     fetchCourses();
+    fetchEnrollments();
   }
 
   const toggleShowCourses = async () => {
@@ -129,7 +126,7 @@ export default function Dashboard() {
       dispatch(setCourses(courses)); 
       setAllCourses(allCourses);
     } catch (error) { 
-      console.error("FETCH COURSES ERROR:", error); 
+      // console.error("FETCH COURSES ERROR:", error); 
     } 
   }; 
 

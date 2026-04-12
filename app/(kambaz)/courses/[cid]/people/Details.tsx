@@ -4,10 +4,10 @@ import { FaPencil } from "react-icons/fa6";
 import { IoCloseSharp } from "react-icons/io5"; 
 import { useParams } from "next/navigation"; 
 import Link from "next/link"; 
-import * as client from "../../../account/client"; 
 import FormControl from "react-bootstrap/FormControl";
 import FormSelect from "react-bootstrap/FormSelect";
- 
+import * as client from "../../../account/client"; 
+
 export default function PeopleDetails({ uid, onClose }: { uid: string | null; onClose: () => void; }) { 
   const [user, setUser] = useState<any>({}); 
   
@@ -56,8 +56,6 @@ export default function PeopleDetails({ uid, onClose }: { uid: string | null; on
     setEditRole(false);
     onClose();
   }
-
-  // to edit the user's email
   
   useEffect(() => { 
     if (uid) fetchUser(); 

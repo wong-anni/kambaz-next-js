@@ -2,8 +2,28 @@
 
 import { Table } from "react-bootstrap"; 
 import { FaUserCircle } from "react-icons/fa"; 
+import * as courseClient from "../../../../courses/client";
+import { useParams } from "next/navigation";
+import { useState, useEffect } from "react";
 
-export default function PeopleTable({ users = [], fetchUsers }: { users?: any[]; fetchUsers: () => void; }) {     return ( 
+export default function PeopleTable() {     
+  const { cid } = useParams();   // get course ID from URL
+  const [users, setUsers] = useState([]);
+
+  const fetchUsers = async () => {
+    const users = await courseClient.findUsersForCourse(cid as string);
+    setUsers(users);
+  };
+
+//   useEffect(() => {
+//     fetchUsers();
+//   }, [cid]);
+  useEffect(() => {
+    if (!cid) return;
+    fetchUsers();
+  }, [cid]);
+
+    return (         
     <div id="wd-people-table"> 
         <Table striped> 
             <thead> 

@@ -2,11 +2,8 @@
 
 import { Table } from "react-bootstrap"; 
 import { FaUserCircle } from "react-icons/fa"; 
-import * as client from "../../../../account/client"; 
 import PeopleDetails from "../Details"; 
-import Link from "next/link";
 import { useState } from "react";
-
 
 export default function PeopleTable({ users = [], fetchUsers }: { users?: any[]; fetchUsers: () => void; }) { 
   const [showDetails, setShowDetails] = useState(false); 
