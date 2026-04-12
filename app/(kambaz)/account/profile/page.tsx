@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCurrentUser } from "../reducer"; 
 import * as client from "../client"; 
 import { RootState } from "../../store";
-import Link from "next/link"; 
 import { FormControl, Button } from "react-bootstrap";
 
 export default function Profile() { 
@@ -52,7 +51,7 @@ export default function Profile() {
          <FormControl id="wd-email" className="mb-2" 
            defaultValue={profile.email} 
            onChange={(e) => setProfile({ ...profile, email: e.target.value })} /> 
-         <select className="form-control mb-2" id="wd-role"  
+         <select className="form-control mb-2" id="wd-role" value={profile.role}
            onChange={(e) => setProfile({ ...profile, role: e.target.value })} > 
            <option value="USER">User</option> 
            <option value="ADMIN">Admin</option> 
