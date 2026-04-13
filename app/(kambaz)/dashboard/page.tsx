@@ -81,10 +81,9 @@ export default function Dashboard() {
         (e: Enrollment) => e.user === currentUser._id && e.course === course._id
       )
     );
-
     const fetchEnrollments = async () => {
-    const enrollments = await enrollmentClient.findEnrollmentsForUser(currentUser._id);
-    dispatch(setEnrollments(enrollments));
+      const enrollments = await enrollmentClient.findEnrollmentsForUser(currentUser._id);
+      dispatch(setEnrollments(enrollments));
   }
 
   const handleEnrollments = async (courseId: string) => { 
@@ -92,10 +91,9 @@ export default function Dashboard() {
 
     const updated = await enrollmentClient.findEnrollmentsForUser(currentUser._id);
     dispatch(setEnrollments(updated));
-
-    const allCourses = await client.fetchAllCourses();
-    setAllCourses(allCourses);
+    await client.fetchAllCourses();
     fetchCourses();
+    fetchEnrollments();
   }; 
 
   const handleUnenrollments = async (courseId: string) => {
@@ -103,10 +101,9 @@ export default function Dashboard() {
 
     const updated = await enrollmentClient.findEnrollmentsForUser(currentUser._id);
     dispatch(setEnrollments(updated));
-
-    const allCourses = await client.fetchAllCourses();
-    setAllCourses(allCourses);
+    await client.fetchAllCourses();
     fetchCourses();
+    fetchEnrollments();
   }
 
   const toggleShowCourses = async () => {
@@ -114,33 +111,30 @@ export default function Dashboard() {
   };
 
   useEffect(() => { 
-    fetchEnrollments(); 
-  }, []);
+  //   fetchEnrollments(); 
+  // }, []);
+  if (!currentUser?._id) return;
+  fetchEnrollments(); 
+}, [currentUser]);
 
   const fetchCourses = async () => { 
-    
+    if (!currentUser?._id) return;
     try { 
       const courses = await client.findMyCourses(); 
       const allCourses = await client.fetchAllCourses();
+
       dispatch(setCourses(courses)); 
       setAllCourses(allCourses);
     } catch (error) { 
-      console.error(error); 
+      // console.error("FETCH COURSES ERROR:", error); 
     } 
   }; 
 
   useEffect(() => { 
+    if (!currentUser?._id) return;
     fetchCourses(); 
   }, [currentUser]);
 
-  // const filteredCourses = courses.filter((course) => 
-  //   currentUser &&
-  //   enrollments.some( 
-  //     (enrollment) => 
-  //       enrollment.user === currentUser._id && 
-  //       enrollment.course === course._id 
-  //     ));
-  
   return ( 
     <div id="wd-dashboard"> 
       <div className="d-flex align-items-center justify-content-between">
